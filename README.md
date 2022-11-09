@@ -3,7 +3,7 @@ A simple software development issue tracking app. Built using .NET 6 / ASP.NET.
 
 
 ## Solution Architecture
-![Image](.github/readme/arch.png)
+![Image](.github/readme/arch.png | width=100)
 
 ## Running 
 Currently, the project is configured to use an SQL server running in a docker container. 
