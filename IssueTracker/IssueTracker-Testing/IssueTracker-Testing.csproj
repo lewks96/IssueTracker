@@ -26,4 +26,8 @@
 	  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IssueTracker-CoreServices\IssueTracker-CoreServices.csproj" />
+  </ItemGroup>
+
 </Project>
