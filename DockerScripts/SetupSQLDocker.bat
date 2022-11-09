@@ -1,0 +1,1 @@
+docker run -it -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=A&VeryComplex123Password" -p 1433:1433 -d --name IssueTracker-SQL mcr.microsoft.com/mssql/server:2022-latest
