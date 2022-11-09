@@ -30,7 +30,7 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="btn-group">
+    <input type="button" value="Edit" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("Edit", "Projects",new { id = Model.Id })'" />
+    <input type="button" value="Back" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Index", "Projects")'"/>
 </div>

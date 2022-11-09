@@ -1,7 +1,10 @@
 using IssueTracker_CoreServices.Data;
 using IssueTracker_CoreServices.Models;
+using IssueTracker_CoreServices.Service;
+using IssueTracker_CoreServices.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NuGet.DependencyResolver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +26,9 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDefaultIdentity<IssueTrackerUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<IServiceBase<ApplicationDbContext, Project, int>, ProjectService>();
+
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
