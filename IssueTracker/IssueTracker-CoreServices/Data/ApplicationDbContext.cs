@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace IssueTracker_CoreServices.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
+    public class ApplicationDbContext : IdentityDbContext<TrackerUser, IdentityRole<Guid>, Guid>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -18,13 +19,17 @@ namespace IssueTracker_CoreServices.Data
         {
             public ApplicationDbContext CreateDbContext(string[] args)
             {
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory() + "/../Common/")
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+               
                 var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet-IssueTracker;Trusted_Connection=True;MultipleActiveResultSets=true");
-
+                optionsBuilder.UseSqlServer(configuration.GetConnectionString("default"));
                 return new ApplicationDbContext(optionsBuilder.Options);
             }
         }
 
-        public DbSet<User> UsersDb { get; set; }
+        public DbSet<TrackerUser> UsersDb { get; set; }
     }
 }

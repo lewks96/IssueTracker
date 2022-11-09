@@ -24,17 +24,17 @@ namespace IssueTracker_WebApp.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
-        private readonly IUserStore<User> _userStore;
-        private readonly IUserEmailStore<User> _emailStore;
+        private readonly SignInManager<TrackerUser> _signInManager;
+        private readonly UserManager<TrackerUser> _userManager;
+        private readonly IUserStore<TrackerUser> _userStore;
+        private readonly IUserEmailStore<TrackerUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<User> userManager,
-            IUserStore<User> userStore,
-            SignInManager<User> signInManager,
+            UserManager<TrackerUser> userManager,
+            IUserStore<TrackerUser> userStore,
+            SignInManager<TrackerUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -74,6 +74,10 @@ namespace IssueTracker_WebApp.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -122,8 +126,11 @@ namespace IssueTracker_WebApp.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
                 user.Role = Input.Level; 
-                await _userStore.SetUserNameAsync(user, Input.FirstName, CancellationToken.None);
+
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 
@@ -165,11 +172,11 @@ namespace IssueTracker_WebApp.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private User CreateUser()
+        private TrackerUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<User>();
+                return Activator.CreateInstance<TrackerUser>();
             }
             catch
             {
@@ -179,13 +186,13 @@ namespace IssueTracker_WebApp.Areas.Identity.Pages.Account
             }
         }
 
-        private IUserEmailStore<User> GetEmailStore()
+        private IUserEmailStore<TrackerUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<User>)_userStore;
+            return (IUserEmailStore<TrackerUser>)_userStore;
         }
     }
 }

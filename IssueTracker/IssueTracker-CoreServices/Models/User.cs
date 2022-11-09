@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace IssueTracker_CoreServices.Models
 {
-    public class User : IdentityUser<Guid>
+    public class TrackerUser : IdentityUser<Guid>
     {
-       public RoleLevel Role { get; set; } 
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public RoleLevel Role { get; set; }
     }
 }
