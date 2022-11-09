@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace IssueTracker_CoreServices.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<TrackerUser, IdentityRole<Guid>, Guid>
+    public class ApplicationDbContext : IdentityDbContext<IssueTrackerUser, IdentityRole<Guid>, Guid>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -30,6 +30,8 @@ namespace IssueTracker_CoreServices.Data
             }
         }
 
-        public DbSet<TrackerUser> UsersDb { get; set; }
+        public DbSet<IssueTrackerUser> UsersDb { get; set; }
+        public DbSet<Project> ProjectsDb { get; set; }
+        public DbSet<Issue> IssuesDb { get; set; }
     }
 }

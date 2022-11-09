@@ -24,17 +24,17 @@ namespace IssueTracker_WebApp.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<TrackerUser> _signInManager;
-        private readonly UserManager<TrackerUser> _userManager;
-        private readonly IUserStore<TrackerUser> _userStore;
-        private readonly IUserEmailStore<TrackerUser> _emailStore;
+        private readonly SignInManager<IssueTrackerUser> _signInManager;
+        private readonly UserManager<IssueTrackerUser> _userManager;
+        private readonly IUserStore<IssueTrackerUser> _userStore;
+        private readonly IUserEmailStore<IssueTrackerUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<TrackerUser> userManager,
-            IUserStore<TrackerUser> userStore,
-            SignInManager<TrackerUser> signInManager,
+            UserManager<IssueTrackerUser> userManager,
+            IUserStore<IssueTrackerUser> userStore,
+            SignInManager<IssueTrackerUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -172,11 +172,11 @@ namespace IssueTracker_WebApp.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private TrackerUser CreateUser()
+        private IssueTrackerUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<TrackerUser>();
+                return Activator.CreateInstance<IssueTrackerUser>();
             }
             catch
             {
@@ -186,13 +186,13 @@ namespace IssueTracker_WebApp.Areas.Identity.Pages.Account
             }
         }
 
-        private IUserEmailStore<TrackerUser> GetEmailStore()
+        private IUserEmailStore<IssueTrackerUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<TrackerUser>)_userStore;
+            return (IUserEmailStore<IssueTrackerUser>)_userStore;
         }
     }
 }
