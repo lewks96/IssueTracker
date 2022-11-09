@@ -48,5 +48,5 @@ However, if there are issues with the database, try running:
     dotnet tool install dotnet-ef --version 6.0.10   # Ensure the required version of the EF tool is installed locally
     cd ./IssueTracker/IssueTracker-CoreServices
     dotnet dotnet-ef database drop                   # Enter 'Y' when required
-    dotnet dotnet-tool ef database update 
+    dotnet dotnet-ef database update 
 ```
