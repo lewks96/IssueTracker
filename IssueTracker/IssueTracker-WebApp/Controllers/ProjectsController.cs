@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IssueTracker_CoreServices.Data;
 using IssueTracker_CoreServices.Models;
+using IssueTracker_CoreServices.Services;
 
-namespace IssueTracker_WebApp
+namespace IssueTracker_WebApp.Controllers
 {
     public class ProjectsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IServiceBase<ApplicationDbContext, Project, int> _context;
 
-        public ProjectsController(ApplicationDbContext context)
+        public ProjectsController(IServiceBase<ApplicationDbContext, Project, int> context)
         {
             _context = context;
         }
@@ -22,19 +23,19 @@ namespace IssueTracker_WebApp
         // GET: Projects
         public async Task<IActionResult> Index()
         {
-              return View(await _context.ProjectsDb.ToListAsync());
+            return View(await _context.GetAllAsync());
         }
 
         // GET: Projects/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.ProjectsDb == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var project = await _context.ProjectsDb
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var project = await _context.FindAsync(id.Value);
+
             if (project == null)
             {
                 return NotFound();
@@ -58,7 +59,7 @@ namespace IssueTracker_WebApp
         {
             if (ModelState.IsValid)
             {
-                _context.Add(project);
+                await _context.AddAsync(project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -68,12 +69,12 @@ namespace IssueTracker_WebApp
         // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.ProjectsDb == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var project = await _context.ProjectsDb.FindAsync(id);
+            var project = await _context.FindAsync(id.Value);
             if (project == null)
             {
                 return NotFound();
@@ -119,13 +120,13 @@ namespace IssueTracker_WebApp
         // GET: Projects/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.ProjectsDb == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var project = await _context.ProjectsDb
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var project = await _context.FindAsync(id.Value);
+
             if (project == null)
             {
                 return NotFound();
@@ -139,23 +140,23 @@ namespace IssueTracker_WebApp
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.ProjectsDb == null)
+            if (_context == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.ProjectsDb'  is null.");
             }
-            var project = await _context.ProjectsDb.FindAsync(id);
+            var project = await _context.FindAsync(id);
             if (project != null)
             {
-                _context.ProjectsDb.Remove(project);
+                _context.Remove(project);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProjectExists(int id)
         {
-          return _context.ProjectsDb.Any(e => e.Id == id);
+            return _context.Exists(id);
         }
     }
 }
