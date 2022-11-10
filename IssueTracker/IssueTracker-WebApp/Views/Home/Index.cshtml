@@ -1,10 +1,22 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@using IssueTracker_CoreServices.Models;
+@inject SignInManager<IssueTrackerUser> SignInManager
+@inject UserManager<IssueTrackerUser> UserManager
+
 @{
     ViewData["Title"] = "Home Page";
 }
 
-
 <div class="text-center">
+
+@if (SignInManager.IsSignedIn(User))
+{
+    IssueTrackerUser trackerUser = (IssueTrackerUser)await UserManager.GetUserAsync(User);
+    <h1 class="display-4">Welcome, @trackerUser.FirstName</h1>
+}
+else
+{
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Login to see your projects and assigned issues</p>
+}
 </div>
