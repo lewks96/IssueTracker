@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<IssueTracker_CoreServices.Models.Issue>
+@using Microsoft.AspNetCore.Identity
+@using IssueTracker_CoreServices.Models;
+@inject SignInManager<IssueTrackerUser> SignInManager
+@inject UserManager<IssueTrackerUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
@@ -25,41 +29,59 @@
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Created)
+                Created
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClosedDate)
+                Closed
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Project.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClosedDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @if (item.ClosedDate.HasValue)
+                    {
+                        @Html.DisplayFor(modelItem => item.ClosedDate)
+                    }
+                    else
+                    {
+                        <p>-</p>
+                    }
+                </td>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    IssueTrackerUser trackerUser = (IssueTrackerUser)await UserManager.GetUserAsync(User);
+                    <td class="btn-group">
+                        <input type="button" value="Edit" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("Edit", "Issue",new { id = item.Id })'" />
+                        <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Issue",new { id = item.Id })'" />
+                        <input type="button" value="Delete" class="btn btn-danger btn-sm" onclick="location.href='@Url.Action("Delete", "Issue",new { id = item.Id })'" />
+                    </td>
+                }
+                else
+                {
+                    <td class="btn-group">
+                        <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Issue",new { id = item.Id })'" />
+                    </td>
+                }
+            </tr>
+        }
     </tbody>
 </table>
