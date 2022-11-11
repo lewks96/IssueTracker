@@ -60,15 +60,16 @@ namespace IssueTracker_WebApp.Controllers
             if (ModelState.IsValid)
             {
                 issue = IssueDto.ToBasicIssue(dto);
-                issue.Created = new DateTime();
+                issue.Created = DateTime.Now;
 
                 var project = await _projects.FindAsync(id.Value);
 
                 if(project == null)
                 {
                     return NotFound();
-                }
-                ((List<Issue>)project.Issues).Add(issue);
+                } 
+
+                project.Issues.Add(issue);
                 issue.Project = project;
                 await _issues.AddAsync(issue);
                 await _issues.SaveChangesAsync();
