@@ -24,7 +24,7 @@ namespace IssueTracker_WebApp.Controllers
         }
 
         // GET: Issue
-        public async Task<IActionResult> Index() => View(await _issues.GetAllAsync());
+        public async Task<IActionResult> Index() => View(await _issues.QueryWithInclude(i => i.Project).ToListAsync());
 
         public async Task<IActionResult> Project(int? id)
         {
