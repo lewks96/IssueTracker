@@ -28,6 +28,7 @@ builder.Services.AddDefaultIdentity<IssueTrackerUser>(options => options.SignIn.
 builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IServiceBase<ApplicationDbContext, Project, int>, ProjectService>();
+builder.Services.AddScoped<IServiceBase<ApplicationDbContext, Issue, int>, IssueService>();
 
 
 var app = builder.Build();

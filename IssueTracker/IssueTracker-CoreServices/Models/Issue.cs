@@ -21,6 +21,7 @@ namespace IssueTracker_CoreServices.Models
         public IssueStatus Status { get; set; }
         public DateTime Created { get; set; }
         public DateTime? ClosedDate { get; set; }
-        public IEnumerable<IssueTrackerUser> Assignees { get; set; }
+        public Project Project { get; set; }
+        public List<IssueTrackerUser> Assignees { get; set; }
     }
 }

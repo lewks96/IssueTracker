@@ -13,7 +13,7 @@ namespace IssueTracker_CoreServices.Models
         public string Name { get; set; }
         public string Description { get; set; } 
         public string VersionControlURL { get; set; }
-        public IEnumerable<Issue> Issues { get; set; }
-        public IEnumerable<IssueTrackerUser> Maintainers{ get; set; }
+        public List<Issue> Issues { get; set; } = new List<Issue>();
+        public List<IssueTrackerUser> Maintainers{ get; set; } = new List<IssueTrackerUser>();
     }
 }

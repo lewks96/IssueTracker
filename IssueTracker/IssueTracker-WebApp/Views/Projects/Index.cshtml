@@ -38,7 +38,7 @@
                 @Html.DisplayFor(modelItem => item.VersionControlURL)
             </td>
             <td class="btn-group">
-                <input type="button" value="Issues" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("Edit", "Projects",new { id = item.Id })'" />
+                <input type="button" value="Issues" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("Project", "Issue",new { id = item.Id })'" />
                 <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Projects",new { id = item.Id })'" />
                 <input type="button" value="Delete" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Delete", "Projects",new { id = item.Id })'" />
             </td>

@@ -1,0 +1,61 @@
+﻿@model IssueTracker_CoreServices.Models.DTO.ProjectIssuesDto;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>@Model.ProjectName - Issues</h1>
+
+<p>
+    <input type="button" value="New" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("New", "Issue",new { id = Model.ProjectId })'" />
+    <a asp-action="New" asp-route-id="@Model?.ProjectId" type="button" class="modify-user-btn btn-light" style="float: right;">NEWNEW</a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Created
+            </th>
+            <th>
+                ClosedDate
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Issues) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClosedDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

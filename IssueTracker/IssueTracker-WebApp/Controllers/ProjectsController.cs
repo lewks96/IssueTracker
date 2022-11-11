@@ -45,6 +45,12 @@ namespace IssueTracker_WebApp.Controllers
         }
 
         // GET: Projects/Create
+        public IActionResult New(int? id)
+        {
+            return View();
+        }
+
+        // GET: Projects/Create
         public IActionResult Create()
         {
             return View();
