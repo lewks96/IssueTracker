@@ -13,6 +13,13 @@ namespace IssueTracker_CoreServices.Models
         Closed,
     }
 
+    public enum Severity
+    {
+        Critical,
+        Major,
+        Minor,
+    }
+
     public class Issue
     {
         public int Id { get; set; } 
@@ -22,6 +29,7 @@ namespace IssueTracker_CoreServices.Models
         public DateTime Created { get; set; }
         public DateTime? ClosedDate { get; set; }
         public Project Project { get; set; }
+        public Severity Severity { get; set; }
         public List<IssueTrackerUser> Assignees { get; set; }
     }
 }

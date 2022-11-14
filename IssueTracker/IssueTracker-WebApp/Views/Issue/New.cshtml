@@ -13,23 +13,26 @@
     <div class="col-md-4">
         <form asp-action="New">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProjectId"/>
+            <input type="hidden" asp-for="ProjectId" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-2">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label">Status:</label>
-                @Html.DropDownListFor(i => i.Status , new SelectList(Enum.GetValues(typeof(IssueStatus))),"Select Status", new { @class = "dropdown" })
-                <span asp-validation-for="Status" class="text-danger"></span>
+            <div class="form-group mt-2">
+                <label asp-for="Severity" class="control-label">Status:</label>
+                @Html.RadioButtonFor(i => i.Severity, Severity.Critical, new {@class = "form-check-input"}) @Html.Label("Minor")
+                @Html.RadioButtonFor(i => i.Severity, Severity.Major, new {@class = "form-check-input"} ) @Html.Label("Minor")
+                @Html.RadioButtonFor(i => i.Severity, Severity.Minor, new {@class = "form-check-input"}) @Html.Label("Minor")
+
+                <span asp-validation-for="Severity" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-2">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -41,5 +44,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

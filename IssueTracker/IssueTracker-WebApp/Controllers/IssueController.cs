@@ -54,7 +54,7 @@ namespace IssueTracker_WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(int? id, [Bind("Id,Name,Description")] IssueDto dto)
+        public async Task<IActionResult> New(int? id, [Bind("Id,Name,Description,Severity")] IssueDto dto)
         {
             Issue issue = null;
             if (ModelState.IsValid)

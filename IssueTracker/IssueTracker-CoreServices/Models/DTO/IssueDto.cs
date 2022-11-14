@@ -12,7 +12,7 @@ namespace IssueTracker_CoreServices.Models.DTO
         public string Name { get; set; }
         public string Description { get; set; }
         public IssueStatus Status { get; set; }
-        public DateTime Created { get; set; }
+        public Severity Severity { get; set; }
 
         public static Issue ToBasicIssue(IssueDto dto)
         {
@@ -21,6 +21,7 @@ namespace IssueTracker_CoreServices.Models.DTO
                 Name = dto.Name,
                 Description = dto.Description,
                 Status = dto.Status,
+                Severity = dto.Severity,
             };
         }
     }

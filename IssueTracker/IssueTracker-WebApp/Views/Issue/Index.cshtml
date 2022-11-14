@@ -40,48 +40,68 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Project.Name)
+            switch (item.Severity)
+            {
+                case Severity.Major:
+                    <text>
+                    <tr class="table-warning">
+                    </text>
+                    break;
+                case Severity.Minor:
+                    <text>
+                    <tr class="table-active">
+                    </text>
+                    break;
+                case Severity.Critical:
+                    <text>
+                    <tr class="table-danger">
+                    </text>
+                    break;
+                default:
+                    <text>
+                    <tr>
+                    </text>
+                    break;
+            }
+                <td style="">
+                @Html.DisplayFor(modelItem => item.Project.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Status)
+                @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Created)
+                @Html.DisplayFor(modelItem => item.Created)
                 </td>
                 <td>
-                    @if (item.ClosedDate.HasValue)
-                    {
-                        @Html.DisplayFor(modelItem => item.ClosedDate)
-                    }
-                    else
-                    {
-                        <p>-</p>
-                    }
-                </td>
-                @if (SignInManager.IsSignedIn(User))
+                @if (item.ClosedDate.HasValue)
                 {
-                    IssueTrackerUser trackerUser = (IssueTrackerUser)await UserManager.GetUserAsync(User);
-                    <td class="btn-group">
-                        <input type="button" value="Edit" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("Edit", "Issue",new { id = item.Id })'" />
-                        <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Issue",new { id = item.Id })'" />
-                        <input type="button" value="Delete" class="btn btn-danger btn-sm" onclick="location.href='@Url.Action("Delete", "Issue",new { id = item.Id })'" />
-                    </td>
+                    @Html.DisplayFor(modelItem => item.ClosedDate)
                 }
                 else
                 {
+                        <p>-</p>
+                }
+                </td>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                IssueTrackerUser trackerUser = (IssueTrackerUser)await UserManager.GetUserAsync(User);
+                    <td class="">
+                        <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Issue",new { id = item.Id })'" />
+                    </td>
+            }
+            else
+            {
                     <td class="btn-group">
                         <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Issue",new { id = item.Id })'" />
                     </td>
-                }
-            </tr>
+            }
+                <tr/>
         }
     </tbody>
 </table>

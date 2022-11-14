@@ -12,7 +12,11 @@
 @if (SignInManager.IsSignedIn(User))
 {
     IssueTrackerUser trackerUser = (IssueTrackerUser)await UserManager.GetUserAsync(User);
-    <h1 class="display-4">Welcome, @trackerUser.FirstName</h1>
+    <h1 class="display-4">Dashboard</h1>
+    <hr/>
+    <h2 class="display-6">Open Issues</h2>
+    <hr/>
+    <h2 class="display-6">Assigned Projects</h2>
 }
 else
 {
