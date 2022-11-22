@@ -1,0 +1,43 @@
+﻿@using IssueTracker_CoreServices.Models;
+@inject SignInManager<IssueTrackerUser> SignInManager
+@inject UserManager<IssueTrackerUser> UserManager
+
+@{
+    switch ((Severity)ViewData["IssueType"])
+    {
+        case Severity.Critical:
+        case Severity.Major:
+            <text>
+                <div class="card text-white bg-danger mb-3">
+            </text>
+            break;
+        case Severity.Minor:
+            <text>
+                <div class="card text-white bg-warning mb-3">
+            </text>
+            break;
+        default:
+            <text>
+                <div class="card text-white mb-3">
+            </text>
+            break;
+    }
+}
+<div class="card-header">Major Issues</div>
+<div class="card-body">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="card-title">
+                    Title
+                </th>
+            </tr>
+        </thread>
+        <tbody>
+        <td class="card-text">
+            text
+        </td>
+        </tbody>
+    </table>
+</div>
+</div>

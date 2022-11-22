@@ -9,18 +9,24 @@
 
 <div class="text-center">
 
-@if (SignInManager.IsSignedIn(User))
-{
-    IssueTrackerUser trackerUser = (IssueTrackerUser)await UserManager.GetUserAsync(User);
-    <h1 class="display-4">Dashboard</h1>
-    <hr/>
-    <h2 class="display-6">Open Issues</h2>
-    <hr/>
-    <h2 class="display-6">Assigned Projects</h2>
-}
-else
-{
-    <h1 class="display-4">Welcome</h1>
-    <p>Login to see your projects and assigned issues</p>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        IssueTrackerUser trackerUser = (IssueTrackerUser)await UserManager.GetUserAsync(User);
+        <h1 class="display-4">Dashboard</h1>
+        <hr />
+        <h2 class="display-6">Assigned Issues</h2>
+        <div class="d-flex justify-content-around">
+            @{
+                await Html.RenderPartialAsync("Partials/IssueCardPartial", null, new ViewDataDictionary(ViewData) { { "IssueType", Severity.Major} });
+                await Html.RenderPartialAsync("Partials/IssueCardPartial", null, new ViewDataDictionary(ViewData) { { "IssueType", Severity.Minor} });
+            }
+        </div>
+        <hr />
+        <h2 class="display-6">Assigned Projects</h2>
+    }
+    else
+    {
+        <h1 class="display-4">Welcome</h1>
+        <p>Login to see your projects and assigned issues</p>
+    }
 </div>
