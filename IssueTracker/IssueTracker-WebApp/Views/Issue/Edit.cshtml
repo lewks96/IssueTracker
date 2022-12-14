@@ -1,4 +1,6 @@
-﻿@model IssueTracker_CoreServices.Models.Issue
+﻿@using IssueTracker_CoreServices.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IssueTracker_CoreServices.Models.Issue
 
 @{
     ViewData["Title"] = "Edit";
@@ -23,10 +25,12 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
+            <div class="form-group mt-2">
+                <label asp-for="Severity" class="control-label">Severity:</label>
+                @Html.RadioButtonFor(i => i.Severity, Severity.Critical, new {@class = "form-check-input"}) @Html.Label("Critical")
+                @Html.RadioButtonFor(i => i.Severity, Severity.Major, new {@class = "form-check-input"} ) @Html.Label("Major")
+                @Html.RadioButtonFor(i => i.Severity, Severity.Minor, new {@class = "form-check-input"}) @Html.Label("Minor")
+                <span asp-validation-for="Severity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Created" class="control-label"></label>

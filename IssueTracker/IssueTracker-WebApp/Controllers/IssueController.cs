@@ -136,7 +136,7 @@ namespace IssueTracker_WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Status,Created,ClosedDate")] Issue issue)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Severity,Created,ClosedDate")] Issue issue)
         {
             if (id != issue.Id)
             {
