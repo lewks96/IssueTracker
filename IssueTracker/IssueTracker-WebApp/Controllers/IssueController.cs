@@ -35,7 +35,7 @@ namespace IssueTracker_WebApp.Controllers
             if (project == null)
                 return NotFound();
 
-            project.Issues = (await _issues.GetAllAsync()).Where(x=>x.Project.Id== id.Value).ToList();
+            project.Issues = (await _issues.GetAllAsync()).Where(x => x.Project.Id == id.Value).ToList();
 
             return View(ProjectIssuesDto.CreateDto(project));
         }
@@ -56,7 +56,7 @@ namespace IssueTracker_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> New(int? id, [Bind("Id,Name,Description,Severity")] IssueDto dto)
         {
-            Issue issue = null;
+            Issue issue = null!;
             if (ModelState.IsValid)
             {
                 issue = IssueDto.ToBasicIssue(dto);
@@ -64,10 +64,10 @@ namespace IssueTracker_WebApp.Controllers
 
                 var project = await _projects.FindAsync(id.Value);
 
-                if(project == null)
+                if (project == null)
                 {
                     return NotFound();
-                } 
+                }
 
                 project.Issues.Add(issue);
                 issue.Project = project;
@@ -76,7 +76,7 @@ namespace IssueTracker_WebApp.Controllers
                 await _projects.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(issue);
+            return View(IssueDto.FromIssue(issue));
         }
 
         // GET: Issue/Details/5

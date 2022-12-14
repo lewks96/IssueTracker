@@ -26,8 +26,8 @@
             </div>
             <div class="form-group mt-2">
                 <label asp-for="Severity" class="control-label">Status:</label>
-                @Html.RadioButtonFor(i => i.Severity, Severity.Critical, new {@class = "form-check-input"}) @Html.Label("Minor")
-                @Html.RadioButtonFor(i => i.Severity, Severity.Major, new {@class = "form-check-input"} ) @Html.Label("Minor")
+                @Html.RadioButtonFor(i => i.Severity, Severity.Critical, new {@class = "form-check-input"}) @Html.Label("Critical")
+                @Html.RadioButtonFor(i => i.Severity, Severity.Major, new {@class = "form-check-input"} ) @Html.Label("Major")
                 @Html.RadioButtonFor(i => i.Severity, Severity.Minor, new {@class = "form-check-input"}) @Html.Label("Minor")
                 <span asp-validation-for="Severity" class="text-danger"></span>
             </div>
