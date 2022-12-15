@@ -13,9 +13,9 @@ namespace IssueTracker_WebApp.Controllers
 {
     public class ProjectsController : Controller
     {
-        private readonly IServiceBase<ApplicationDbContext, Project, int> _context;
+        private readonly IServiceBase<Project, int> _context;
 
-        public ProjectsController(IServiceBase<ApplicationDbContext, Project, int> context)
+        public ProjectsController(IServiceBase<Project, int> context)
         {
             _context = context;
         }

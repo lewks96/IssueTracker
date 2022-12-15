@@ -6,18 +6,18 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using IssueTracker_CoreServices.Data;
 
 namespace IssueTracker_CoreServices.Services
 {
-    public class IServiceBase<TContext, TEntity, TComparable>
-        where TContext : DbContext
+    public class IServiceBase<TEntity, TComparable>
         where TEntity : class
         where TComparable : IComparable
     {
-        private readonly TContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly DbSet<TEntity> _set;
 
-        public IServiceBase(TContext context, DbSet<TEntity> set)
+        public IServiceBase(ApplicationDbContext context, DbSet<TEntity> set)
         {
             _context = context;
             _set = set;
@@ -32,6 +32,11 @@ namespace IssueTracker_CoreServices.Services
         public bool Exists(TComparable id) => FindAsync(id).Result != null;
         public void Remove(TEntity entity) => _set.Remove(entity);
         public void Update(TEntity entity) => _set.Update(entity);
+
+        public IEnumerable<TEntity> Where(Func<TEntity, bool> predicate)
+        {
+            return _set.Where(predicate).ToList();
+        }
 
         public IIncludableQueryable<TEntity, TProperty> QueryWithInclude<TProperty>(Expression<Func<TEntity, TProperty>> navigation) => _set.Include(navigation);
     }

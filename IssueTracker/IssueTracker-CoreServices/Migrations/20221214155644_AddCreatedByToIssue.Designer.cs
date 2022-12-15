@@ -4,6 +4,7 @@ using IssueTracker_CoreServices.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IssueTracker_CoreServices.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221214155644_AddCreatedByToIssue")]
+    partial class AddCreatedByToIssue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,8 +38,8 @@ namespace IssueTracker_CoreServices.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("CreatedById")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -55,6 +57,8 @@ namespace IssueTracker_CoreServices.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("ProjectId");
 
@@ -301,9 +305,15 @@ namespace IssueTracker_CoreServices.Migrations
 
             modelBuilder.Entity("IssueTracker_CoreServices.Models.Issue", b =>
                 {
+                    b.HasOne("IssueTracker_CoreServices.Models.IssueTrackerUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
                     b.HasOne("IssueTracker_CoreServices.Models.Project", "Project")
                         .WithMany("Issues")
                         .HasForeignKey("ProjectId");
+
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Project");
                 });

@@ -14,13 +14,17 @@ namespace IssueTracker_WebApp.Controllers
 {
     public class IssueController : Controller
     {
-        private readonly IServiceBase<ApplicationDbContext, Issue, int> _issues;
-        private readonly IServiceBase<ApplicationDbContext, Project, int> _projects;
-
-        public IssueController(IServiceBase<ApplicationDbContext, Issue, int> issues, IServiceBase<ApplicationDbContext, Project, int> projects)
+        private readonly IServiceBase<Issue, int> _issues;
+        private readonly IServiceBase<Project, int> _projects;
+        private readonly IServiceBase<IssueTrackerUser, string> _users;
+        public IssueController(
+            IServiceBase<Issue, int> issues,
+            IServiceBase<Project, int> projects,
+            IServiceBase<IssueTrackerUser, string> users)
         {
             _issues = issues;
             _projects = projects;
+            _users = users;
         }
 
         // GET: Issue
@@ -59,15 +63,16 @@ namespace IssueTracker_WebApp.Controllers
             Issue issue = null!;
             if (ModelState.IsValid)
             {
+                var res = _users.Where(z => z.UserName == HttpContext.User.Identity.Name);
+
                 issue = IssueDto.ToBasicIssue(dto);
                 issue.Created = DateTime.Now;
+                issue.CreatedBy = res.ToArray()[0].UserName;
 
                 var project = await _projects.FindAsync(id.Value);
 
                 if (project == null)
-                {
                     return NotFound();
-                }
 
                 project.Issues.Add(issue);
                 issue.Project = project;

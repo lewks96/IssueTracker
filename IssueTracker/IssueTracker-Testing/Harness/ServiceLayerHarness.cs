@@ -18,7 +18,7 @@ namespace IssueTracker_Testing.Harness
     {
         protected TContext _context;
         protected DbSet<TEntity> _workingSet;
-        protected IServiceBase<TContext, TEntity, TComparable> _sut;
+        protected IServiceBase<TEntity, TComparable> _sut;
 
         protected IEntitySpecialization<TEntity> _entitySpecialization;
 
@@ -130,7 +130,7 @@ namespace IssueTracker_Testing.Harness
 
             Assert.That(result, Is.Not.Null);
             Assert.That(_entitySpecialization.CompareEntity(result, _entitySpecialization.ModifyEntity(elem)), Is.True);
-         
+
             _context.Remove(elem);
             _context.SaveChanges();
         }

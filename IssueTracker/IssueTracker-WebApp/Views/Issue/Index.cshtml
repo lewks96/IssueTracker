@@ -10,9 +10,6 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -23,16 +20,13 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Created By
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
                 Created
-            </th>
-            <th>
-                Closed
             </th>
             <th></th>
         </tr>
@@ -63,20 +57,17 @@
                     </text>
                     break;
             }
-                <td >
+                <td>
                 @Html.DisplayFor(modelItem => item.Project.Name)
                 </td>
                 <td>
                 @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.CreatedBy)
                 </td>
                 <td>
                 @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                @Html.DisplayFor(modelItem => item.Created)
                 </td>
                 <td>
                 @if (item.ClosedDate.HasValue)
@@ -92,8 +83,14 @@
             {
                 IssueTrackerUser trackerUser = (IssueTrackerUser)await UserManager.GetUserAsync(User);
                     <td class="">
-                        <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Issue",new { id = item.Id })'" />
+                        <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Issue", new { id = item.Id })'" />
                     </td>
+                if (trackerUser.UserName == item.CreatedBy)
+                {
+                        <td class="">
+                            <input type="button" value="Close" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Close", "Issue",new { id = item.Id })'" />
+                        </td>
+                }
             }
             else
             {
@@ -101,7 +98,7 @@
                         <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Issue",new { id = item.Id })'" />
                     </td>
             }
-                <tr/>
+            <tr />
         }
     </tbody>
 </table>

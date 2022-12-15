@@ -27,8 +27,9 @@ builder.Services.AddDefaultIdentity<IssueTrackerUser>(options => options.SignIn.
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 
-builder.Services.AddScoped<IServiceBase<ApplicationDbContext, Project, int>, ProjectService>();
-builder.Services.AddScoped<IServiceBase<ApplicationDbContext, Issue, int>, IssueService>();
+builder.Services.AddScoped<IServiceBase<Project, int>, ProjectService>();
+builder.Services.AddScoped<IServiceBase<Issue, int>, IssueService>();
+builder.Services.AddScoped<IServiceBase<IssueTrackerUser, string>, UsersService>();
 
 
 var app = builder.Build();

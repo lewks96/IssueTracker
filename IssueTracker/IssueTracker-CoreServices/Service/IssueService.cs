@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IssueTracker_CoreServices.Service
 {
-    public class IssueService : IServiceBase<ApplicationDbContext, Issue, int>
+    public class IssueService : IServiceBase<Issue, int>
     {
         public IssueService(ApplicationDbContext context) : base(context, context.IssuesDb)
         {
