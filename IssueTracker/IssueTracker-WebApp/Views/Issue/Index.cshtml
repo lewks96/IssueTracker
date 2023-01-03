@@ -69,35 +69,30 @@
                 <td>
                 @Html.DisplayFor(modelItem => item.Status)
                 </td>
-                <td>
                 @if (item.ClosedDate.HasValue)
                 {
-                    @Html.DisplayFor(modelItem => item.ClosedDate)
-                }
-                else
-                {
-                        <p>-</p>
-                }
-                </td>
-            @if (SignInManager.IsSignedIn(User))
-            {
-                IssueTrackerUser trackerUser = (IssueTrackerUser)await UserManager.GetUserAsync(User);
-                    <td class="">
-                        <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Issue", new { id = item.Id })'" />
-                    </td>
-                if (trackerUser.UserName == item.CreatedBy)
-                {
-                        <td class="">
-                            <input type="button" value="Close" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Close", "Issue",new { id = item.Id })'" />
-                        </td>
-                }
+                @Html.DisplayFor(modelItem => item.ClosedDate)
             }
             else
             {
-                    <td class="btn-group">
-                        <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Issue",new { id = item.Id })'" />
-                    </td>
+                <td></td>
             }
+                <td class="btn-group-table-cell">
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                IssueTrackerUser trackerUser = (IssueTrackerUser)await UserManager.GetUserAsync(User);
+                <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Issue", new { id = item.Id })'" />
+                if (trackerUser.UserName == item.CreatedBy)
+                {
+                    <input type="button" value="Close" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Close", "Issue",new { id = item.Id })'" />
+                }
+                else 
+                { 
+                    <input type="button" value="Details" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Details", "Issue",new { id = item.Id })'" />
+                }
+                }
+                </td>
             <tr />
         }
     </tbody>

@@ -1,0 +1,22 @@
+﻿@using IssueTracker_CoreServices.Models;
+@inject SignInManager<IssueTrackerUser> SignInManager
+@inject UserManager<IssueTrackerUser> UserManager
+
+        
+<h1 class="display-4">Dashboard</h1>
+<hr />
+<h2 class="display-6">Assigned Issues</h2>
+<div class="d-flex justify-content-around">
+    @{
+        IssueTrackerUser trackerUser = (IssueTrackerUser)await UserManager.GetUserAsync(User);
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-header">Major Issues</div>
+            <div class="card-body">
+                <h4 class="card-title">Danger card title</h4>
+                <p class="card-text">ToDo</p>
+            </div>
+        </div>
+    }
+</div>
+<hr />
+<h2 class="display-6">Assigned Projects</h2>
