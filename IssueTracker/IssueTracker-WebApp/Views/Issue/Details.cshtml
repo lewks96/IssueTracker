@@ -4,10 +4,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
+<h1>@Model.Name</h1>
 <div>
-    <h4>Issue</h4>
+    <h4>Details</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -20,7 +19,6 @@
             @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Status)
@@ -35,14 +33,27 @@
             @Html.DisplayFor(model => model.Created)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClosedDate)
+            Closed Date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ClosedDate)
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="btn-group">
+    <input type="button" value="Edit" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("Edit", "Issue",new { id = Model.Id })'" />
+    <input type="button" value="Back" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Index", "Issue")'" />
+</div>
+
+<h2 class="pt-3">Discussion</h2>
+<hr/>
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Card title</h4>
+    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
 </div>
